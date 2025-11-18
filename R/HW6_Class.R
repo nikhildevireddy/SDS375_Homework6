@@ -1,11 +1,14 @@
 ## HW6 Class/Methods
 
-#' @importFrom methods setClass setValidity setAs setGeneric setMethod new
+#' Sparse numeric internal
+#' @name sparse_numeric-internal
+#' @keywords internal
+#' @import methods
+#' @importFrom graphics plot points
+NULL
 
 #' Sparse numeric vector class
-#'
-#' An S4 class for representing numeric vectors in sparse form.
-#'
+#' @description An S4 class for representing numeric vectors in sparse form.
 #' @slot value Numeric vector of non-zero values.
 #' @slot pos Integer vector of positions of the non-zero values.
 #' @slot length Single integer giving the length of the full vector.
@@ -46,11 +49,16 @@ setValidity("sparse_numeric", function(object) {
 })
 
 
-#' Coerce a dense numeric vector to sparse_numeric
+#' Coerce numeric to sparse_numeric
+#'
+#' @name coerce-numeric-sparse_numeric
+#' @description Convert a dense numeric vector to a sparse_numeric vector.
 #'
 #' @param from A numeric vector.
 #'
-#' @return A \code{sparse_numeric} object.
+#' @return A sparse_numeric object.
+#'
+#' @aliases coerce,numeric,sparse_numeric-method
 #' @exportMethod coerce
 setAs("numeric", "sparse_numeric", function(from) {
   n <- length(from)
@@ -67,11 +75,17 @@ setAs("numeric", "sparse_numeric", function(from) {
       length = as.integer(n))
 })
 
-#' Coerce a sparse_numeric vector to dense numeric
+
+#' Coerce sparse_numeric to numeric
 #'
-#' @param from A \code{sparse_numeric} object.
+#' @name coerce-sparse_numeric-numeric
+#' @description Convert a sparse_numeric vector to a dense numeric vector.
+#'
+#' @param from A sparse_numeric object.
 #'
 #' @return A numeric vector.
+#'
+#' @aliases coerce,sparse_numeric,numeric-method
 #' @exportMethod coerce
 setAs("sparse_numeric", "numeric", function(from) {
   out <- numeric(from@length)
@@ -91,34 +105,52 @@ setAs("sparse_numeric", "numeric", function(from) {
 
 ## Generics ------------------------------------------------------------
 
-#' Add two sparse vectors
+#' Addition for sparse_numeric vectors
+#' @description Add two sparse vectors
+#' @name sparse_add
+#' @rdname sparse_add
 #'
-#' @param x,y \code{sparse_numeric} vectors of the same length.
+#' @param x, sparse numeric vector
+#' @param y, sparse numeric vector
 #'
 #' @return A \code{sparse_numeric} containing the elementwise sum.
+#' @export
 setGeneric("sparse_add", function(x, y) standardGeneric("sparse_add"))
 
-#' Subtract two sparse vectors
-#'
-#' @param x,y \code{sparse_numeric} vectors of the same length.
+#' Subtraction for sparse_numeric vectors
+#' @description Subtract two sparse vectors
+#' @name sparse_sub
+#' @rdname sparse_sub
+#' @param x, sparse numeric vector
+#' @param y, sparse numeric vector
 #'
 #' @return A \code{sparse_numeric} containing the elementwise difference.
+#' @export
 setGeneric("sparse_sub", function(x, y) standardGeneric("sparse_sub"))
 
-#' Elementwise multiply two sparse vectors
-#'
-#' @param x,y \code{sparse_numeric} vectors of the same length.
+#' Multiplication for sparse_numeric vectors
+#' @description Elementwise multiply two sparse vectors
+#' @name sparse_mult
+#' @rdname sparse_mult
+#' @param x, sparse numeric vector
+#' @param y, sparse numeric vector.
 #'
 #' @return A \code{sparse_numeric} containing the elementwise product.
+#' @export
 setGeneric("sparse_mult", function(x, y) standardGeneric("sparse_mult"))
 
-#' Sparse crossproduct (dot product)
-#'
-#' @param x,y \code{sparse_numeric} vectors of the same length.
+#' Cross product for sparse_numeric vectors
+#' @description Sparse crossproduct (dot product)
+#' @name sparse_crossprod
+#' @rdname sparse_crossprod
+#' @param x, sparse numeric vector
+#' @param y, sparse numeric vector
 #'
 #' @return A numeric scalar giving the dot product.
+#' @export
 setGeneric("sparse_crossprod", function(x, y) standardGeneric("sparse_crossprod"))
 
+#' Addition for sparse_numeric vectors
 #' @description Add two sparse_numeric vectors.
 #'
 #' @param x A sparse_numeric object.
@@ -161,6 +193,7 @@ setMethod("sparse_add",
             }
           })
 
+#' Subtraction for sparse_numeric vectors
 #' @description Subtract one sparse_numeric vector from another.
 #'
 #' @param x A sparse_numeric object.
@@ -203,8 +236,8 @@ setMethod("sparse_sub",
             }
           })
 
+#' Multiplication for sparse_numeric vectors
 #' @description Multiply two sparse_numeric vectors elementwise.
-#'
 #' @param x A sparse_numeric object.
 #' @param y A sparse_numeric object.
 #'
@@ -249,8 +282,8 @@ setMethod("sparse_mult",
             }
           })
 
+#' Crossproduct for sparse_numeric vectors
 #' @description Compute the sparse crossproduct (dot product).
-#'
 #' @param x A sparse_numeric object.
 #' @param y A sparse_numeric object.
 #'
@@ -277,8 +310,8 @@ setMethod("sparse_crossprod",
           })
 
 
+#' + operator
 #' @description Add two sparse_numeric objects using the + operator.
-#'
 #' @param e1 A sparse_numeric object.
 #' @param e2 A sparse_numeric object.
 #'
@@ -288,8 +321,8 @@ setMethod("sparse_crossprod",
 setMethod("+", signature(e1 = "sparse_numeric", e2 = "sparse_numeric"),
           function(e1, e2) sparse_add(e1, e2))
 
+#' - operator
 #' @description Subtract two sparse_numeric objects using the - operator.
-#'
 #' @param e1 A sparse_numeric object.
 #' @param e2 A sparse_numeric object.
 #'
@@ -299,6 +332,7 @@ setMethod("+", signature(e1 = "sparse_numeric", e2 = "sparse_numeric"),
 setMethod("-", signature(e1 = "sparse_numeric", e2 = "sparse_numeric"),
           function(e1, e2) sparse_sub(e1, e2))
 
+#' * operator
 #' @description Multiply two sparse_numeric objects using the * operator.
 #'
 #' @param e1 A sparse_numeric object.
@@ -311,10 +345,8 @@ setMethod("*", signature(e1 = "sparse_numeric", e2 = "sparse_numeric"),
           function(e1, e2) sparse_mult(e1, e2))
 
 
-#' Display a sparse_numeric object
-#'
-#' Prints a summary of the sparse_numeric vector, including its length,
-#' the number of non-zero entries, and a table of positions and values.
+#' sparse numeric display
+#' @description Prints a summary of the sparse_numeric vector
 #'
 #' @param object A sparse_numeric object.
 #' @return Prints summary output.
@@ -335,15 +367,12 @@ setMethod("show", "sparse_numeric", function(object) {
 })
 
 
-#' Plot overlapping non-zero entries of two sparse_numeric vectors
-#'
-#' Creates a scatterplot showing the values of two sparse_numeric vectors
-#' at positions where both vectors have non-zero entries. If there are no
-#' overlapping non-zero positions, an empty placeholder plot is drawn.
+#' sparse numeric plot
+#' @description Creates a scatterplot showing the values of two sparse_numeric vectors
+#' at positions where both vectors have non-zero entries
 #'
 #' @param x A sparse_numeric object.
 #' @param y A sparse_numeric object.
-#' @param ... Additional graphical parameters.
 #' @return A plot.
 #' @exportMethod plot
 setMethod(
@@ -362,8 +391,8 @@ setMethod(
 
 ## Additional method: length of sparse_numeric vectors -----------------
 
+#' Sparse numeric length
 #' @description Length of a sparse_numeric object.
-#'
 #' @param x A sparse_numeric object.
 #'
 #' @return Integer length.
@@ -373,8 +402,8 @@ setMethod("length", "sparse_numeric", function(x) {
   x@length
 })
 
+#' Sparse numeric mean
 #' @description Mean of a sparse_numeric vector, including zero entries.
-#'
 #' @param x A sparse_numeric object.
 #' @param ... Ignored.
 #'
@@ -395,14 +424,17 @@ setMethod("mean", "sparse_numeric", function(x, ...) {
 #' Euclidean norm
 #'
 #' Generic for computing the Euclidean (L2) norm.
-#'
+#' @name norm
+#' @rdname norm
 #' @param x An object.
 #' @param ... Further arguments (unused).
+#' @export
 setGeneric("norm", function(x, ...) standardGeneric("norm"))
 
-
+#' Euclidean norm
 #' @description Euclidean norm of a sparse_numeric vector.
-#'
+#' @aliases norm,sparse_numeric-method
+#' @rdname norm
 #' @param x A sparse_numeric object.
 #'
 #' @return A numeric scalar giving the norm.
@@ -413,17 +445,19 @@ setMethod("norm", "sparse_numeric", function(x, ...) {
 })
 
 
-# ---- standardize() ----
 #' Standardize sparse_numeric vector
 #'
 #' Computes (x - mean) / sd without dense coercion.
-#'
+#' @name standardize
+#' @rdname standardize
 #' @export
 setGeneric("standardize", function(x, ...) standardGeneric("standardize"))
 
 
+#' Standardize sparse_numeric vector
 #' @description Standardize a sparse_numeric vector.
-#'
+#' @rdname standardize
+#' @aliases standardize,sparse_numeric-method
 #' @details Computes (x - mean) / sd over all entries including zeros.
 #'
 #' @param x A sparse_numeric object.
