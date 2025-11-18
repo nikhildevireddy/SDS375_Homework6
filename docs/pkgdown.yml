@@ -2,4 +2,7 @@ pandoc: 3.8.1
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles: {}
-last_built: 2025-11-18T19:51Z
+last_built: 2025-11-18T20:06Z
+urls:
+  reference: https://nikhildevireddy.github.io/SDS375_Homework6/reference
+  article: https://nikhildevireddy.github.io/SDS375_Homework6/articles

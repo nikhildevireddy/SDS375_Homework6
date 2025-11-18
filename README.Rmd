@@ -10,12 +10,7 @@ output: github_document
 [![R-CMD-check](https://github.com/nikhildevireddy/SDS375_Homework6/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/nikhildevireddy/SDS375_Homework6/actions/workflows/R-CMD-check.yml)
 <!-- badges: end -->
 
-`Homework6` provides an S4 class (`sparse_numeric`) for representing
-sparse numeric vectors along with efficient operations such as addition,
-subtraction, elementwise multiplication, cross-products, mean, norm, and
-standardization. The package is useful when working with numeric vectors
-that contain many zeros, allowing you to store only the non-zero
-entries.
+ `Homework6` offers an S4 sparse_numeric class for compactly storing sparse numeric vectors plus fast operations—addition, subtraction, elementwise products, cross-products, mean, norm, and standardization. It’s designed for zero-heavy vectors so you keep only the nonzero entries while still working with them efficiently.
 
 ## Installation
 
@@ -25,11 +20,14 @@ You can install the development version of **Homework6** from GitHub
 devtools::load_all(".")
 ```
 
+```r
+# install.packages("pak")
+pak::pak("nikhildevireddy/Homework6")
+```
 
-## Example
+## Examples
 
-Below is a basic example showing how to construct sparse vectors and carry
-out arithmetic operations:
+How the package is used to construct sparse vectors and execute arithmetic operations:
 
 ```{r}
 library(Homework6)
@@ -44,19 +42,18 @@ sy <- as(y, "sparse_numeric")
 
 # Addition
 sparse_add(sx, sy)
-#> An object of class sparse_numeric ...
 
 # Elementwise multiplication
 sparse_mult(sx, sy)
 
-# Compute the Euclidean norm
+# Compute the norm
 norm(sx)
 
 # Standardize the vector
 standardize(sx)
 ```
 
-## What the package provides
+## Package Methods
 
 - A compact S4 representation of sparse numeric vectors  
 - Vectorized arithmetic: `+`, `-`, `*`  
@@ -73,10 +70,10 @@ standardize(sx)
 
 ## Development
 
-This package was built for the UT Austin SDS 375 Data Product course and
+This package was built for the UT Austin SDS 375 Data Product Development course and
 includes:
 
 - Test coverage using **testthat**
 - Automated documentation using **roxygen2**
-- A pkgdown website
+- A hosted website
 - GitHub Actions CI (R CMD check)

@@ -8,21 +8,25 @@
 [![R-CMD-check](https://github.com/nikhildevireddy/SDS375_Homework6/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/nikhildevireddy/SDS375_Homework6/actions/workflows/R-CMD-check.yml)
 <!-- badges: end -->
 
-`Homework6` provides an S4 class (`sparse_numeric`) for representing
-sparse numeric vectors along with efficient operations such as addition,
-subtraction, elementwise multiplication, cross-products, mean, norm, and
-standardization. The package is useful when working with numeric vectors
-that contain many zeros, allowing you to store only the non-zero
-entries.
+`Homework6` offers an S4 sparse_numeric class for compactly storing
+sparse numeric vectors plus fast operations—addition, subtraction,
+elementwise products, cross-products, mean, norm, and standardization.
+It’s designed for zero-heavy vectors so you keep only the nonzero
+entries while still working with them efficiently.
 
 ## Installation
 
 You can install the development version of **Homework6** from GitHub
 
-## Example
+``` r
+# install.packages("pak")
+pak::pak("nikhildevireddy/Homework6")
+```
 
-Below is a basic example showing how to construct sparse vectors and
-carry out arithmetic operations:
+## Examples
+
+How the package is used to construct sparse vectors and execute
+arithmetic operations:
 
 ``` r
 library(Homework6)
@@ -48,8 +52,6 @@ sparse_add(sx, sy)
     ##    4    10
 
 ``` r
-#> An object of class sparse_numeric ...
-
 # Elementwise multiplication
 sparse_mult(sx, sy)
 ```
@@ -61,7 +63,7 @@ sparse_mult(sx, sy)
     ##    4    21
 
 ``` r
-# Compute the Euclidean norm
+# Compute the norm
 norm(sx)
 ```
 
@@ -81,7 +83,7 @@ standardize(sx)
     ##    3 -0.8164966
     ##    4  0.4082483
 
-## What the package provides
+## Package Methods
 
 - A compact S4 representation of sparse numeric vectors  
 - Vectorized arithmetic: `+`, `-`, `*`  
@@ -95,10 +97,10 @@ standardize(sx)
 
 ## Development
 
-This package was built for the UT Austin SDS 375 Data Product course and
-includes:
+This package was built for the UT Austin SDS 375 Data Product
+Development course and includes:
 
 - Test coverage using **testthat**
 - Automated documentation using **roxygen2**
-- A pkgdown website
+- A hosted website
 - GitHub Actions CI (R CMD check)
