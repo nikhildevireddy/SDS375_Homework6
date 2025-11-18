@@ -1,8 +1,5 @@
 Package: Homework6
 Title: Sparse Numeric Vector Utilities
-Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
 Description: Implements an S4 class called sparse_numeric for representing
     numeric vectors in sparse form and provides arithmetic, summary, and
     plotting methods. Includes coercion helpers, operators for addition,
