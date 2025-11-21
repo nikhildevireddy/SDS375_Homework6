@@ -10,7 +10,7 @@ output: github_document
 [![R-CMD-check](https://github.com/nikhildevireddy/SDS375_Homework6/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/nikhildevireddy/SDS375_Homework6/actions/workflows/R-CMD-check.yml)
 <!-- badges: end -->
 
- `Homework6` offers an S4 sparse_numeric class for compactly storing sparse numeric vectors plus fast operations—addition, subtraction, elementwise products, cross-products, mean, norm, and standardization. It’s designed for zero-heavy vectors so you keep only the nonzero entries while still working with them efficiently.
+ `Homework6` offers an S4 sparse_numeric class for compactly storing sparse numeric vectors plus fast operations—addition, subtraction, elementwise products, cross-products, mean, norm, and standardization. It’s designed to keep only the nonzero entries of vectors while still working with them efficiently.
 
 ## Installation
 
@@ -22,7 +22,7 @@ devtools::load_all(".")
 
 ```r
 # install.packages("pak")
-pak::pak("nikhildevireddy/Homework6")
+pak::pkg_install("nikhildevireddy/SDS375_Homework6")
 ```
 
 ## Examples
@@ -33,8 +33,8 @@ How the package is used to construct sparse vectors and execute arithmetic opera
 library(Homework6)
 
 # Create two numeric vectors
-x <- c(0, 5, 0, 3)
-y <- c(2, 0, 0, 7)
+x <- c(1, 6, 8, 4)
+y <- c(3, 4, 0, 2)
 
 # Convert to sparse_numeric
 sx <- as(x, "sparse_numeric")
@@ -62,18 +62,15 @@ standardize(sx)
   - `sparse_sub()`
   - `sparse_mult()`
   - `sparse_crossprod()`
-  - `nnzero()`
   - `standardize()`
   - `norm()`  
-- A custom `plot()` method for visualizing overlapping non-zero entries  
-- Full documentation and examples on the package website (built with pkgdown)
+- `plot()` method for visualizing sparse vectors  
 
-## Development
+## Development and Automatoin
 
-This package was built for the UT Austin SDS 375 Data Product Development course and
-includes:
+The package also includes
 
 - Test coverage using **testthat**
-- Automated documentation using **roxygen2**
-- A hosted website
-- GitHub Actions CI (R CMD check)
+- Documentation using **roxygen2**
+- Github Pages hosted website
+- GitHub Workflow (R CMD check)
